@@ -21,18 +21,20 @@ public class Main {
         long startTime = System.nanoTime();
         list.stream()
             .filter(s -> s.startsWith(input))
-            .limit(10)
-            .collect(Collectors.toList())
-            .forEach(System.out::println);
+            //            .limit(3)
+            .collect(Collectors.toList());
+        //            .forEach(System.out::println);
         long estTime = TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
-        System.out.println("Time: " + estTime + "ms");
+        System.out.println("Time pseudo-func: " + estTime + "ms");
 
         String[] dict = list.toArray(new String[list.size()]);
-        Trie t = new Trie(dict);
+        TriePrefix tp = new TriePrefix(dict);
         startTime = System.nanoTime();
-        t.root.printWordsFor(input);
+        List<String> s = tp.getWordsFor(input);
         estTime = TimeUnit.MILLISECONDS.convert(System.nanoTime() - startTime, TimeUnit.NANOSECONDS);
-        System.out.println("Time: " + estTime + "ms");
+        System.out.println("Time trie: " + estTime + "ms");
+
+        s.stream().forEach(System.out::println);
 
     }
 }
